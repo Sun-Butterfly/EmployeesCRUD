@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using EmployeesCRUD;
+using FluentValidation;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.AddDbContext<DataBaseContext>();
 builder.Services.AddMediatR(x=> x.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddControllersWithViews().AddJsonOptions(opts =>
 {
     var enumConverter = new JsonStringEnumConverter();

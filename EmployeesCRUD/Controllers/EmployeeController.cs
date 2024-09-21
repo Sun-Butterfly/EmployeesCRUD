@@ -33,7 +33,11 @@ public class EmployeeController : Controller
         var request = new AddEmployeeRequest(requestDto.Name, requestDto.SecondName, requestDto.LastName,
             requestDto.DateOfBirth, requestDto.DateOfEmployment, requestDto.DepartmentName, requestDto.JobTitle);
         var response = await _mediator.Send(request);
-        return Ok(response.Id);
+        if (response.IsFailed)
+        {
+            return BadRequest(response.Stringify());
+        }
+        return Ok(response.Value.Id);
     }
 
     [HttpGet]
@@ -48,7 +52,11 @@ public class EmployeeController : Controller
     public async Task<IActionResult> SetNewJobTitle(long employeeId, JobTitle.JobTitles jobTitle)
     {
         var request = new SetNewJobTitleRequest(employeeId, jobTitle);
-        await _mediator.Send(request);
+        var response = await _mediator.Send(request);
+        if (response.IsFailed)
+        {
+            return BadRequest(response.Stringify());
+        }
         return Ok();
     }
 }

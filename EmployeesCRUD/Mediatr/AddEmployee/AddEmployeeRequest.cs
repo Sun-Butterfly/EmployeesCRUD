@@ -1,4 +1,5 @@
 using EmployeesCRUD.Models;
+using FluentResults;
 using MediatR;
 
 namespace EmployeesCRUD.Mediatr.AddEmployee;
@@ -11,4 +12,4 @@ public record AddEmployeeRequest(
     DateTime DateOfEmployment,
     string DepartmentName,
     JobTitle.JobTitles JobTitle
-) : IRequest<AddEmployeeResponse>;
+) : IRequest<Result<AddEmployeeResponse>>;
