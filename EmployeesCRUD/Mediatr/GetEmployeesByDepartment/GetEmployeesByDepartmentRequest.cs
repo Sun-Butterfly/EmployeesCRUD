@@ -1,6 +1,5 @@
-using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 using MediatR;
 
-namespace EmployeesCRUD.Mediatr.GetEmployeeByDepartment;
+namespace EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 
 public record GetEmployeesByDepartmentRequest(string DepartmentName) : IRequest<GetEmployeesByDepartmentResponse>;

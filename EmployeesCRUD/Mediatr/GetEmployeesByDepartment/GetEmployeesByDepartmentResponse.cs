@@ -1,5 +1,4 @@
 using EmployeesCRUD.DTOs;
-using EmployeesCRUD.Models;
 
 namespace EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 

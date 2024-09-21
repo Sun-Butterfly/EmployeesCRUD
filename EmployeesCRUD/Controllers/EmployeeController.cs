@@ -1,6 +1,8 @@
 using EmployeesCRUD.DTOs;
 using EmployeesCRUD.Mediatr.AddEmployee;
-using EmployeesCRUD.Mediatr.GetEmployeeByDepartment;
+using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
+using EmployeesCRUD.Mediatr.SetNewJobTitle;
+using EmployeesCRUD.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,5 +42,13 @@ public class EmployeeController : Controller
         var request = new GetEmployeesByDepartmentRequest(departmentName);
         var response = await _mediator.Send(request);
         return Ok(response.Employees);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SetNewJobTitle(long employeeId, JobTitle.JobTitles jobTitle)
+    {
+        var request = new SetNewJobTitleRequest(employeeId, jobTitle);
+        await _mediator.Send(request);
+        return Ok();
     }
 }

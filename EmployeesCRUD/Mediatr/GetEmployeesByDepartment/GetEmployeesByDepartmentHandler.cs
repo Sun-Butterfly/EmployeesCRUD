@@ -1,9 +1,8 @@
 using EmployeesCRUD.DTOs;
-using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeesCRUD.Mediatr.GetEmployeeByDepartment;
+namespace EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 
 public class
     GetEmployeesByDepartmentHandler : IRequestHandler<GetEmployeesByDepartmentRequest, GetEmployeesByDepartmentResponse>
