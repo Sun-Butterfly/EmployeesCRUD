@@ -1,7 +1,9 @@
 using EmployeesCRUD.DTOs;
 using EmployeesCRUD.Mediatr.AddEmployee;
 using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
+using EmployeesCRUD.Mediatr.SetNewDepartment;
 using EmployeesCRUD.Mediatr.SetNewJobTitle;
+using EmployeesCRUD.Mediatr.UpdateEmployee;
 using EmployeesCRUD.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +39,7 @@ public class EmployeeController : Controller
         {
             return BadRequest(response.Stringify());
         }
+
         return Ok(response.Value.Id);
     }
 
@@ -57,6 +60,34 @@ public class EmployeeController : Controller
         {
             return BadRequest(response.Stringify());
         }
+
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SetNewDepartment(long employeeId, string departmentName)
+    {
+        var request = new SetNewDepartmentRequest(employeeId, departmentName);
+        var response = await _mediator.Send(request);
+        if (response.IsFailed)
+        {
+            return BadRequest(response.Stringify());
+        }
+
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequestDto requestDto)
+    {
+        var request = new UpdateEmployeeRequest(requestDto.Id, requestDto.Name, requestDto.SecondName,
+            requestDto.LastName, requestDto.DateOfBirth);
+        var response = await _mediator.Send(request);
+        if (response.IsFailed)
+        {
+            return BadRequest(response.Stringify());
+        }
+
         return Ok();
     }
 }
