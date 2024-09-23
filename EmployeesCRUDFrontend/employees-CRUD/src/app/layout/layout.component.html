@@ -1,0 +1,17 @@
+<header>
+  <div class="title">
+    <h1>{{title}}</h1>
+  </div>
+  <div class="tabs">
+    <div class="tab" (click)="goToAbout()" [class.active]="url==='/about'">О компании</div>
+    <div class="tab" (click)="goToEmployees()" [class.active]="url==='/employees'">Сотрудники</div>
+  </div>
+</header>
+<div class="main">
+  <div class="container">
+<router-outlet></router-outlet>
+  </div>
+</div>
+<footer>
+  <div class="container"></div>
+</footer>
