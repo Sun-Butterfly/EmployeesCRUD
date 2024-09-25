@@ -1,5 +1,6 @@
 using EmployeesCRUD.DTOs;
 using EmployeesCRUD.Mediatr.AddEmployee;
+using EmployeesCRUD.Mediatr.GetAllEmployees;
 using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 using EmployeesCRUD.Mediatr.SetNewDepartment;
 using EmployeesCRUD.Mediatr.SetNewJobTitle;
@@ -47,6 +48,14 @@ public class EmployeeController : Controller
     public async Task<IActionResult> GetEmployeesByDepartment(string departmentName)
     {
         var request = new GetEmployeesByDepartmentRequest(departmentName);
+        var response = await _mediator.Send(request);
+        return Ok(response.Employees);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllEmployees()
+    {
+        var request = new GetAllEmployeesRequest();
         var response = await _mediator.Send(request);
         return Ok(response.Employees);
     }
