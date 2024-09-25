@@ -10,5 +10,6 @@ public record EmployeeDto(
     DateTime DateOfBirth,
     DateTime DateOfEmployment,
     string DepartmentName,
-    JobTitle.JobTitles JobTitle
+    JobTitle.JobTitles JobTitle,
+    int Salary
 );

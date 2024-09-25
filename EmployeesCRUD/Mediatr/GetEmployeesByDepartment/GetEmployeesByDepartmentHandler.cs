@@ -28,7 +28,8 @@ public class
                     x.DateOfBirth,
                     x.DateOfEmployment,
                     x.Department.Name,
-                    x.CurrentJobTitle
+                    x.CurrentJobTitle,
+                    x.JobTitle.Salary
                 )
             )
             .ToListAsync(cancellationToken: cancellationToken);

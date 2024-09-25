@@ -24,7 +24,8 @@ public class GetAllEmployeesHandler : IRequestHandler<GetAllEmployeesRequest, Ge
                 x.DateOfBirth,
                 x.DateOfEmployment,
                 x.Department.Name,
-                x.CurrentJobTitle)).ToListAsync(cancellationToken: cancellationToken);
+                x.CurrentJobTitle,
+                x.JobTitle.Salary)).ToListAsync(cancellationToken: cancellationToken);
         return new GetAllEmployeesResponse(employees);
     }
 }
