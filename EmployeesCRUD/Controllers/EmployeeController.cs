@@ -2,6 +2,7 @@ using EmployeesCRUD.DTOs;
 using EmployeesCRUD.Mediatr.AddEmployee;
 using EmployeesCRUD.Mediatr.GetAllEmployees;
 using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
+using EmployeesCRUD.Mediatr.GetSalary;
 using EmployeesCRUD.Mediatr.SetNewDepartment;
 using EmployeesCRUD.Mediatr.SetNewJobTitle;
 using EmployeesCRUD.Mediatr.UpdateEmployee;
@@ -58,6 +59,14 @@ public class EmployeeController : Controller
         var request = new GetAllEmployeesRequest();
         var response = await _mediator.Send(request);
         return Ok(response.Employees);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetSalary(long id)
+    {
+        var request = new GetSalaryRequest(id);
+        var response = await _mediator.Send(request);
+        return Ok(response.Salary);
     }
 
     [HttpPost]
