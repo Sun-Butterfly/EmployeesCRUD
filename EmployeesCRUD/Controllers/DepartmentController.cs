@@ -19,6 +19,6 @@ public class DepartmentController : Controller
     {
         var request = new GetAllDepartmentRequest();
         var response = await _mediator.Send(request);
-        return Ok(response.Departments);
+        return Ok(response.Value.Departments);
     }
 }

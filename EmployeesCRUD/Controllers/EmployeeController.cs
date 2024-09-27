@@ -1,6 +1,7 @@
 using AutoMapper;
 using EmployeesCRUD.DTOs;
 using EmployeesCRUD.Mediatr.AddEmployee;
+using EmployeesCRUD.Mediatr.DeleteEmployee;
 using EmployeesCRUD.Mediatr.GetAllEmployees;
 using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
 using EmployeesCRUD.Mediatr.GetSalary;
@@ -53,7 +54,7 @@ public class EmployeeController : Controller
     {
         var request = new GetEmployeesByDepartmentRequest(departmentName);
         var response = await _mediator.Send(request);
-        return Ok(response.Employees);
+        return Ok(response.Value.Employees);
     }
 
     [HttpGet]
@@ -61,7 +62,7 @@ public class EmployeeController : Controller
     {
         var request = new GetAllEmployeesRequest();
         var response = await _mediator.Send(request);
-        return Ok(response.Employees);
+        return Ok(response.Value.Employees);
     }
 
     [HttpGet]
@@ -69,7 +70,7 @@ public class EmployeeController : Controller
     {
         var request = new GetSalaryRequest(id);
         var response = await _mediator.Send(request);
-        return Ok(response.Salary);
+        return Ok(response.Value.Salary);
     }
 
     [HttpPost]
@@ -108,6 +109,18 @@ public class EmployeeController : Controller
             return BadRequest(response.Stringify());
         }
 
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteEmployee(long employeeId)
+    {
+        var request = new DeleteEmployeeRequest(employeeId);
+        var response = await _mediator.Send(request);
+        if (response.IsFailed)
+        {
+            return BadRequest(response.Stringify());
+        }
         return Ok();
     }
 }

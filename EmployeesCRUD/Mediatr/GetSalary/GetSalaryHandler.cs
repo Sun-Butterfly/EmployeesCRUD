@@ -1,9 +1,10 @@
+using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeesCRUD.Mediatr.GetSalary;
 
-public class GetSalaryHandler : IRequestHandler<GetSalaryRequest, GetSalaryResponse>
+public class GetSalaryHandler : IRequestHandler<GetSalaryRequest, Result<GetSalaryResponse>>
 {
     private readonly DataBaseContext _db;
 
@@ -12,10 +13,16 @@ public class GetSalaryHandler : IRequestHandler<GetSalaryRequest, GetSalaryRespo
         _db = db;
     }
 
-    public async Task<GetSalaryResponse> Handle(GetSalaryRequest request, CancellationToken cancellationToken)
+    public async Task<Result<GetSalaryResponse>> Handle(GetSalaryRequest request, CancellationToken cancellationToken)
     {
-        var employee = await _db.Employees.Include(employee => employee.JobTitle).FirstOrDefaultAsync(x => 
+        var employee = await _db.Employees.Include(employee => employee.JobTitle).FirstOrDefaultAsync(x =>
             x.Id == request.Id, cancellationToken: cancellationToken);
-        return new GetSalaryResponse(employee.JobTitle.Salary);
+        
+        if (employee == null)
+        {
+            return Result.Fail("Работник не найден");
+        }
+
+        return Result.Ok(new GetSalaryResponse(employee.JobTitle.Salary));
     }
 }

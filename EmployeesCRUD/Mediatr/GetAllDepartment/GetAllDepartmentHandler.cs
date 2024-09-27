@@ -1,10 +1,11 @@
 using EmployeesCRUD.DTOs;
+using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeesCRUD.Mediatr.GetAllDepartment;
 
-public class GetAllDepartmentHandler : IRequestHandler<GetAllDepartmentRequest, GetAllDepartmentResponse>
+public class GetAllDepartmentHandler : IRequestHandler<GetAllDepartmentRequest, Result<GetAllDepartmentResponse>>
 {
     private readonly DataBaseContext _db;
 
@@ -13,7 +14,7 @@ public class GetAllDepartmentHandler : IRequestHandler<GetAllDepartmentRequest, 
         _db = db;
     }
 
-    public async Task<GetAllDepartmentResponse> Handle(GetAllDepartmentRequest request,
+    public async Task<Result<GetAllDepartmentResponse>> Handle(GetAllDepartmentRequest request,
         CancellationToken cancellationToken)
     {
         var departments = await _db.Departments.Select(x => 
@@ -22,6 +23,6 @@ public class GetAllDepartmentHandler : IRequestHandler<GetAllDepartmentRequest, 
                 x.Name
                 )
         ).ToListAsync(cancellationToken: cancellationToken);
-        return new GetAllDepartmentResponse(departments);
+        return Result.Ok(new GetAllDepartmentResponse(departments));
     }
 }

@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using EmployeesCRUD;
+using EmployeesCRUD.Interfaces;
+using EmployeesCRUD.Services;
 using FluentValidation;
 using Microsoft.OpenApi.Models;
 
@@ -31,6 +33,8 @@ builder.Services.AddCors(options =>
         .AllowAnyHeader()
     )
 );
+
+builder.Services.AddScoped<IService,Service>();
 
 var app = builder.Build();
 app.UseCors();
