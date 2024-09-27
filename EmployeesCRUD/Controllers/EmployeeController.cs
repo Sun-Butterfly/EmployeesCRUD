@@ -1,3 +1,4 @@
+using AutoMapper;
 using EmployeesCRUD.DTOs;
 using EmployeesCRUD.Mediatr.AddEmployee;
 using EmployeesCRUD.Mediatr.GetAllEmployees;
@@ -16,10 +17,12 @@ namespace EmployeesCRUD.Controllers;
 public class EmployeeController : Controller
 {
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
-    public EmployeeController(IMediator mediator)
+    public EmployeeController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpPost]
@@ -33,9 +36,9 @@ public class EmployeeController : Controller
         //                  Ручка ->
         //              middleware ->
         //           ДТО ->
-        // Swagger 
-        var request = new AddEmployeeRequest(requestDto.Name, requestDto.SecondName, requestDto.LastName,
-            requestDto.DateOfBirth, requestDto.DateOfEmployment, requestDto.DepartmentName, requestDto.JobTitle);
+        // Swagger
+        var request = _mapper.Map<AddEmployeeRequest>(requestDto);
+        
         var response = await _mediator.Send(request);
         if (response.IsFailed)
         {
@@ -98,8 +101,7 @@ public class EmployeeController : Controller
     [HttpPost]
     public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequestDto requestDto)
     {
-        var request = new UpdateEmployeeRequest(requestDto.Id, requestDto.Name, requestDto.SecondName,
-            requestDto.LastName, requestDto.DateOfBirth);
+        var request = _mapper.Map<UpdateEmployeeRequest>(requestDto);
         var response = await _mediator.Send(request);
         if (response.IsFailed)
         {

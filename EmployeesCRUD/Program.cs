@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.AddDbContext<DataBaseContext>();
 builder.Services.AddMediatR(x=> x.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddAutoMapper(x => x.AddProfile(typeof(MappingProfile)));
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddControllersWithViews().AddJsonOptions(opts =>
 {
