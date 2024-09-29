@@ -1,25 +1,30 @@
 <h1>{{title}}</h1>
 
-<table>
-  <tbody>
-  <tr>
-    <th>Отдел</th>
-    <th>ФИО</th>
-    <th>Дата рождения</th>
-    <th>Дата устройства на работу</th>
-    <th>Зарплата</th>
-  </tr>
-  <tr *ngFor="let employee of employees">
-    <td>{{employee.departmentName}}</td>
-    <td>{{employee.name + ' ' + employee.secondName + ' ' + employee.lastName}}</td>
-    <td>{{employee.dateOfBirth | date: 'mediumDate'}}</td>
-    <td>{{employee.dateOfEmployment | date: 'mediumDate'}}</td>
-    <td>{{employee.salary}}</td>
-    <td>
-      <button class="buttonUpdate">Редактировать</button>
-      <button class="buttonDelete">Удалить</button>
-    </td>
-  </tr>
+<div class="container">
+  <div class="centerContainer">
+    <button class="addEmployee" (click)="openDialog()">Создать сотрудника</button>
+  </div>
+  <table>
+    <tbody>
+    <tr>
+      <th>Отдел</th>
+      <th>ФИО</th>
+      <th>Дата рождения</th>
+      <th>Дата устройства на работу</th>
+      <th>Зарплата</th>
+    </tr>
+    <tr *ngFor="let employee of employees">
+      <td>{{employee.departmentName}}</td>
+      <td>{{employee.name + ' ' + employee.secondName + ' ' + employee.lastName}}</td>
+      <td>{{employee.dateOfBirth | date: 'mediumDate'}}</td>
+      <td>{{employee.dateOfEmployment | date: 'mediumDate'}}</td>
+      <td>{{employee.salary}}</td>
+      <td>
+        <button class="buttonUpdate">Редактировать</button>
+        <button class="buttonDelete">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
-  </tbody>
-</table>

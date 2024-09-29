@@ -1,0 +1,27 @@
+<div class="input-fields" [formGroup]="employeeFormGroup">
+  <label>Имя</label>
+  <p><input type="text" size="40" formControlName="name"></p>
+  <label>Отчество</label>
+  <p><input type="text" size="40" formControlName="secondName"></p>
+  <label>Фамилия</label>
+  <p><input type="text" size="40" formControlName="lastName"></p>
+  <label>Дата рождения</label>
+  <p><input type="date" size="40" formControlName="dateOfBirth"></p>
+  <label>Дата устройства на работу</label>
+  <p><input type="date" size="40" formControlName="dateOfEmployment"></p>
+  <label>Должность</label>
+  <p><select formControlName="jobTitle">
+    <option value="null" disabled>Выберите должность:</option>
+    <option *ngFor="let jobTitle of jobTitles" [value]="jobTitle">{{jobTitle}}</option>
+  </select></p>
+  <label>Отдел</label>
+  <p><input list="departmentName" size="40" formControlName="departmentName">
+    <datalist id="departmentName">
+      <option *ngFor="let department of departments" [value]="department.name">{{department.name}}</option>
+    </datalist>
+  </p>
+  <p>
+    <button class="buttonAdd" (click)="addEmployee()">Добавить</button>
+    <button class="buttonCancel" (click)="onCancelClick()">Отмена</button>
+  </p>
+</div>

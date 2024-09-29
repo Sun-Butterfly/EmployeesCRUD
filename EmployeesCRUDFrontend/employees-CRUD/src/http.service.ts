@@ -14,25 +14,49 @@ export interface Employee {
   salary: number
 }
 
+export interface Department {
+  id: number,
+  name: string
+}
+
+export enum JobTitles {
+  Junior = 'Junior',
+  Middle = 'Middle',
+  Senior = 'Senior',
+  TechLead = 'TechLead',
+  TeamLead = 'TeamLead',
+}
+
 @Injectable({providedIn: "root"})
-export class HttpService{
+export class HttpService {
 
   constructor(private http: HttpClient) {
   }
 
   baseurl: string = "http://localhost:5208"
 
-  getAllEmployees():Observable<Employee[]>{
+  getAllEmployees(): Observable<Employee[]> {
     const url: string = `${this.baseurl}/Employee/GetAllEmployees`
     return this.http.get<Employee[]>(url)
   }
 
   getSalary(id: number): Observable<number> {
     const url: string = `${this.baseurl}/Employee/GetSalary`
-    return this.http.get<number>(url,{
+    return this.http.get<number>(url, {
       params: {
         id: id
-      }})
+      }
+    })
+  }
+
+  getAllDepartments(): Observable<Department[]> {
+    const url: string = `${this.baseurl}/Department/GetAllDepartments`
+    return this.http.get<Department[]>(url)
+  }
+
+  addEmployee(employee: Employee): Observable<void> {
+    const url: string = `${this.baseurl}/Employee/AddEmployee`;
+    return this.http.post<void>(url, employee);
   }
 }
 
