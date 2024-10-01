@@ -23,6 +23,7 @@ export class AddEmployeeDialogComponent implements OnInit {
   departments: Department[] = [];
   employeeFormGroup: FormGroup;
   readonly dialogRef = inject(MatDialogRef<AddEmployeeDialogComponent>);
+  title: string = "Создание сотрудника";
 
   constructor(private http: HttpService) {
     this.employeeFormGroup = new FormGroup({

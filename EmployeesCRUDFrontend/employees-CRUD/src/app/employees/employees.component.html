@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="centerContainer">
-    <button class="addEmployee" (click)="openDialog()">Создать сотрудника</button>
+    <button class="addEmployee" (click)="openAddDialog()">Создать сотрудника</button>
   </div>
   <table>
     <tbody>
@@ -13,7 +13,7 @@
       <th>Дата устройства на работу</th>
       <th>Зарплата</th>
     </tr>
-    <tr *ngFor="let employee of employees">
+    <tr *ngFor="let employee of employees, let i = index" (click)="setActiveEmployee(i)">
       <td>{{employee.departmentName}}</td>
       <td>{{employee.name + ' ' + employee.secondName + ' ' + employee.lastName}}</td>
       <td>{{employee.dateOfBirth | date: 'mediumDate'}}</td>
@@ -21,7 +21,7 @@
       <td>{{employee.salary}}</td>
       <td>
         <button class="buttonUpdate">Редактировать</button>
-        <button class="buttonDelete">Удалить</button>
+        <button class="buttonDelete" (click)="openDeleteDialog(i)">Удалить</button>
       </td>
     </tr>
     </tbody>

@@ -3,6 +3,13 @@ import {HttpService, Employee} from "../../http.service";
 import {DatePipe, NgForOf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {AddEmployeeDialogComponent} from "../add-employee-dialog/add-employee-dialog.component";
+import {DeleteEmployeeDialogComponent} from "../delete-employee-dialog/delete-employee-dialog.component";
+
+
+export interface DialogData {
+  activeEmployeeId: number;
+  employees: Employee[];
+}
 
 @Component({
   selector: 'app-employees',
@@ -18,6 +25,7 @@ export class EmployeesComponent implements OnInit {
   title: string = 'Сотрудники';
   employees: Employee[] = [];
   salary: number = 0;
+  activeEmployee: number = -1;
 
   constructor(private http: HttpService) {
   }
@@ -31,7 +39,7 @@ export class EmployeesComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
 
-  openDialog(): void {
+  openAddDialog(): void {
     const dialog = this.dialog.open(AddEmployeeDialogComponent, {});
 
     dialog.afterClosed().subscribe(() => {
@@ -45,5 +53,30 @@ export class EmployeesComponent implements OnInit {
     this.http.getSalary(id).subscribe(salary => {
       this.salary = salary
     })
+  }
+
+  openDeleteDialog(i: number) {
+    const id = this.employees[i].id;
+    const dialog = this.dialog.open(DeleteEmployeeDialogComponent, {
+      data: {
+        activeEmployeeId: id,
+      }
+    });
+
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.deleteEmployee(id).subscribe(() => {
+          this.employees = this.employees.filter(x => x.id !== id);
+        })
+      }
+    })
+  }
+
+  setActiveEmployee(i: number) {
+    if (this.activeEmployee === i) {
+      this.activeEmployee = -1;
+    } else {
+      this.activeEmployee = i;
+    }
   }
 }

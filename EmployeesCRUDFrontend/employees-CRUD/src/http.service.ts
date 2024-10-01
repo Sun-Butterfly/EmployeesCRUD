@@ -58,5 +58,15 @@ export class HttpService {
     const url: string = `${this.baseurl}/Employee/AddEmployee`;
     return this.http.post<void>(url, employee);
   }
+
+  deleteEmployee(id: number): Observable<void> {
+    const url: string = `${this.baseurl}/Employee/DeleteEmployee`
+    return this.http.delete<void>(url, {
+      params: {
+        employeeId: id
+      }
+    });
+
+  }
 }
 
