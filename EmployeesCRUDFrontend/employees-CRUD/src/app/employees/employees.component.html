@@ -11,6 +11,7 @@
       <th>ФИО</th>
       <th>Дата рождения</th>
       <th>Дата устройства на работу</th>
+      <th>Должность</th>
       <th>Зарплата</th>
     </tr>
     <tr *ngFor="let employee of employees, let i = index" (click)="setActiveEmployee(i)">
@@ -18,9 +19,10 @@
       <td>{{employee.name + ' ' + employee.secondName + ' ' + employee.lastName}}</td>
       <td>{{employee.dateOfBirth | date: 'mediumDate'}}</td>
       <td>{{employee.dateOfEmployment | date: 'mediumDate'}}</td>
+      <td>{{employee.jobTitle}}</td>
       <td>{{employee.salary}}</td>
       <td>
-        <button class="buttonUpdate">Редактировать</button>
+        <button class="buttonUpdate" (click)="openUpdateDialog(i)">Редактировать</button>
         <button class="buttonDelete" (click)="openDeleteDialog(i)">Удалить</button>
       </td>
     </tr>

@@ -2,25 +2,52 @@
   <div class="title">{{title}}</div>
   <label>Имя</label>
   <p><input type="text" size="40" formControlName="name"></p>
+  <div class="validator" *ngIf="employeeFormGroup.get('name')?.errors">
+    <div *ngIf="employeeFormGroup.get('name')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('name')!.errors!['minlength']">Это поле имеет минимальную длину {{employeeFormGroup.get('name')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
   <label>Отчество</label>
   <p><input type="text" size="40" formControlName="secondName"></p>
+  <div class="validator" *ngIf="employeeFormGroup.get('secondName')?.errors">
+    <div *ngIf="employeeFormGroup.get('secondName')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('secondName')!.errors!['minlength']">Это поле имеет минимальную длину {{employeeFormGroup.get('secondName')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
   <label>Фамилия</label>
   <p><input type="text" size="40" formControlName="lastName"></p>
+  <div class="validator" *ngIf="employeeFormGroup.get('lastName')?.errors">
+    <div *ngIf="employeeFormGroup.get('lastName')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('lastName')!.errors!['minlength']">Это поле имеет минимальную длину {{employeeFormGroup.get('lastName')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
   <label>Дата рождения</label>
   <p><input type="date" size="40" formControlName="dateOfBirth"></p>
+  <div class="validator" *ngIf="employeeFormGroup.get('dateOfBirth')?.errors">
+    <div *ngIf="employeeFormGroup.get('dateOfBirth')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('dateOfBirth')!.errors!['validateDateOfBirth']">Сотруднику должно быть 18 лет и более</div>
+  </div>
   <label>Дата устройства на работу</label>
   <p><input type="date" size="40" formControlName="dateOfEmployment"></p>
+  <div class="validator" *ngIf="employeeFormGroup.get('dateOfEmployment')?.errors">
+    <div *ngIf="employeeFormGroup.get('dateOfEmployment')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('dateOfEmployment')!.errors!['validateDateOfEmployment']">Дата не может быть больше, чем сегодня</div>
+  </div>
   <label>Должность</label>
   <p><select formControlName="jobTitle">
     <option value="null" disabled>Выберите должность:</option>
     <option *ngFor="let jobTitle of jobTitles" [value]="jobTitle">{{jobTitle}}</option>
   </select></p>
+  <div class="validator" *ngIf="employeeFormGroup.get('jobTitle')?.errors">
+    <div *ngIf="employeeFormGroup.get('dateOfEmployment')!.errors!['required']">Это поле обязательное</div>
+  </div>
   <label>Отдел</label>
   <p><input list="departmentName" size="40" formControlName="departmentName">
     <datalist id="departmentName">
       <option *ngFor="let department of departments" [value]="department.name">{{department.name}}</option>
     </datalist>
   </p>
+  <div class="validator" *ngIf="employeeFormGroup.get('departmentName')?.errors">
+    <div *ngIf="employeeFormGroup.get('departmentName')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('departmentName')!.errors!['minlength']">Это поле имеет минимальную длину {{employeeFormGroup.get('departmentName')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
   <p>
     <button class="buttonAdd" (click)="addEmployee()">Добавить</button>
     <button class="buttonCancel" (click)="onCancelClick()">Отмена</button>

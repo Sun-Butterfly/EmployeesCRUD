@@ -68,5 +68,11 @@ export class HttpService {
     });
 
   }
+
+  updateEmployee(employee: Employee): Observable<void> {
+    const url: string = `${this.baseurl}/Employee/UpdateEmployee`;
+    return this.http.post<void>(url, employee)
+
+  }
 }
 

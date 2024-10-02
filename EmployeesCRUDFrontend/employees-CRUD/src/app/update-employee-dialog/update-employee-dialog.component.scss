@@ -7,7 +7,6 @@
   box-sizing: border-box;
   border: 3px solid #01330c;
 
-
   color: #042c13;
   font-family: Monotype Corsiva, cursive;
   font-size: 150%;
@@ -19,9 +18,10 @@
     letter-spacing: inherit;
     word-spacing: inherit;
   }
-.title{
-  padding-bottom: 20px;
-}
+  .title{
+    padding-bottom: 20px;
+  }
+
   .validator{
     color: #ff0000;
     font-family: Monotype Corsiva, cursive;
@@ -30,7 +30,7 @@
   }
 }
 
-.buttonAdd {
+.buttonUpdate {
   border: 1px solid black;
   background-color: rgba(143, 222, 161, 0.98);
   color: #042c13;
@@ -46,7 +46,7 @@
   }
 }
 
-.buttonAdd:active {
+.buttonUpdate:active {
   border: 1px solid black;
   background-color: rgba(68, 136, 82, 0.98);
   color: #042c13;
@@ -79,5 +79,3 @@
   font-size: 70%;
   text-align: center;
 }
-
-

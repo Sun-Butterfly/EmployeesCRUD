@@ -1,0 +1,31 @@
+<div class="input-fields" [formGroup]="updateEmployeeFormGroup">
+  <div class="title">{{title}}</div>
+  <label>Имя</label>
+  <p><input type="text" size="40" formControlName="name"></p>
+  <div class="validator" *ngIf="updateEmployeeFormGroup.get('name')?.errors">
+    <div *ngIf="updateEmployeeFormGroup.get('name')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="updateEmployeeFormGroup.get('name')!.errors!['minlength']">Это поле имеет минимальную длину {{updateEmployeeFormGroup.get('name')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
+  <label>Отчество</label>
+  <p><input type="text" size="40" formControlName="secondName"></p>
+  <div class="validator" *ngIf="updateEmployeeFormGroup.get('secondName')?.errors">
+    <div *ngIf="updateEmployeeFormGroup.get('secondName')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="updateEmployeeFormGroup.get('secondName')!.errors!['minlength']">Это поле имеет минимальную длину {{updateEmployeeFormGroup.get('secondName')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
+  <label>Фамилия</label>
+  <p><input type="text" size="40" formControlName="lastName"></p>
+  <div class="validator" *ngIf="updateEmployeeFormGroup.get('lastName')?.errors">
+    <div *ngIf="updateEmployeeFormGroup.get('lastName')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="updateEmployeeFormGroup.get('lastName')!.errors!['minlength']">Это поле имеет минимальную длину {{updateEmployeeFormGroup.get('lastName')!.errors!['minlength']['requiredLength']}}</div>
+  </div>
+  <label>Дата рождения</label>
+  <p><input type="date" size="40" formControlName="dateOfBirth"></p>
+  <div class="validator" *ngIf="updateEmployeeFormGroup.get('dateOfBirth')?.errors">
+    <div *ngIf="updateEmployeeFormGroup.get('dateOfBirth')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="updateEmployeeFormGroup.get('dateOfBirth')!.errors!['validateDateOfBirth']">Сотруднику должно быть 18 лет и более</div>
+  </div>
+  <p>
+    <button class="buttonUpdate" (click)="updateEmployee()">Обновить</button>
+    <button class="buttonCancel" (click)="onCancelClick()">Отмена</button>
+  </p>
+</div>
