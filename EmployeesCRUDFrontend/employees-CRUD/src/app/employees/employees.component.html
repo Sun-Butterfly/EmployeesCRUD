@@ -14,7 +14,7 @@
       <th>Должность</th>
       <th>Зарплата</th>
     </tr>
-    <tr *ngFor="let employee of employees, let i = index" (click)="setActiveEmployee(i)">
+    <tr *ngFor="let employee of paginatedEmployees, let i = index" (click)="setActiveEmployee(i)">
       <td>{{employee.departmentName}}</td>
       <td>{{employee.name + ' ' + employee.secondName + ' ' + employee.lastName}}</td>
       <td>{{employee.dateOfBirth | date: 'mediumDate'}}</td>
@@ -28,5 +28,13 @@
     </tr>
     </tbody>
   </table>
+  <div class="paginator">
+    <button class="previousPage" (click)="goToPreviousPage()" [disabled]="currentPage === 1">Назад</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="nextPage" (click)="goToNextPage()" [disabled]="currentPage === totalPages">Вперед</button>
+<!--    <select (change)="goToPage($event.target.value)">-->
+<!--      <option *ngFor="let page of pageNumbers" [value]="page">{{ page }}</option>-->
+<!--    </select>-->
+  </div>
 </div>
 

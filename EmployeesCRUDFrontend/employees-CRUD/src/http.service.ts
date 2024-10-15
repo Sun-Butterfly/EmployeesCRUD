@@ -19,6 +19,11 @@ export interface Department {
   name: string
 }
 
+export interface GetPaginatedEmployeesResponse {
+  paginatedEmployees: Employee[],
+  totalCount: number
+}
+
 export enum JobTitles {
   Junior = 'Junior',
   Middle = 'Middle',
@@ -74,5 +79,15 @@ export class HttpService {
     return this.http.post<void>(url, employee)
 
   }
-}
 
+  getPaginatedEmployees(currentPage: number, pageSize: number): Observable<GetPaginatedEmployeesResponse> {
+    const url: string = `${this.baseurl}/Employee/GetPaginatedEmployees`;
+    return this.http.get<GetPaginatedEmployeesResponse>(url, {
+      params: {
+        currentPage: currentPage,
+        pageSize: pageSize
+      }
+    });
+  }
+
+}

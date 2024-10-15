@@ -36,7 +36,7 @@
     <option *ngFor="let jobTitle of jobTitles" [value]="jobTitle">{{jobTitle}}</option>
   </select></p>
   <div class="validator" *ngIf="employeeFormGroup.get('jobTitle')?.errors">
-    <div *ngIf="employeeFormGroup.get('dateOfEmployment')!.errors!['required']">Это поле обязательное</div>
+    <div *ngIf="employeeFormGroup.get('jobTitle')!.errors!['required']">Это поле обязательное</div>
   </div>
   <label>Отдел</label>
   <p><input list="departmentName" size="40" formControlName="departmentName">

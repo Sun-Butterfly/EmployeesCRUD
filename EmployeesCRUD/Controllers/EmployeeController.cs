@@ -4,6 +4,7 @@ using EmployeesCRUD.Mediatr.AddEmployee;
 using EmployeesCRUD.Mediatr.DeleteEmployee;
 using EmployeesCRUD.Mediatr.GetAllEmployees;
 using EmployeesCRUD.Mediatr.GetEmployeesByDepartment;
+using EmployeesCRUD.Mediatr.GetPaginatedEmployees;
 using EmployeesCRUD.Mediatr.GetSalary;
 using EmployeesCRUD.Mediatr.SetNewDepartment;
 using EmployeesCRUD.Mediatr.SetNewJobTitle;
@@ -39,7 +40,7 @@ public class EmployeeController : Controller
         //           ДТО ->
         // Swagger
         var request = _mapper.Map<AddEmployeeRequest>(requestDto);
-        
+
         var response = await _mediator.Send(request);
         if (response.IsFailed)
         {
@@ -71,6 +72,14 @@ public class EmployeeController : Controller
         var request = new GetSalaryRequest(id);
         var response = await _mediator.Send(request);
         return Ok(response.Value.Salary);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPaginatedEmployees(int currentPage, int pageSize)
+    {
+        var request = new GetPaginatedEmployeesRequest(currentPage, pageSize);
+        var response = await _mediator.Send(request);
+        return Ok(response.Value);
     }
 
     [HttpPost]
@@ -121,6 +130,7 @@ public class EmployeeController : Controller
         {
             return BadRequest(response.Stringify());
         }
+
         return Ok();
     }
 }

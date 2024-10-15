@@ -45,7 +45,7 @@ export class AddEmployeeDialogComponent implements OnInit {
 
   addEmployee() {
     if(this.employeeFormGroup.invalid){
-      alert('Ты еблан')
+      alert('Ошибка')
       return;
     }
     let value = this.employeeFormGroup.value;

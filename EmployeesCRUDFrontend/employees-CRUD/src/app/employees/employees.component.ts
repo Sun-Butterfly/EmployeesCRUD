@@ -25,18 +25,35 @@ export interface DialogData {
 })
 export class EmployeesComponent implements OnInit {
   title: string = 'Сотрудники';
-  employees: Employee[] = [];
+  paginatedEmployees: Employee[] = [];
   salary: number = 0;
   activeEmployee: number = -1;
+
+  totalItems: number = 0;
+  pageSize: number = 2;
+  currentPage: number = 1;
+  totalPages: number = 0;
+
 
   constructor(private http: HttpService) {
   }
 
   ngOnInit(): void {
-    this.http.getAllEmployees().subscribe(employees => {
-      this.employees = employees
-    });
+    this.getPaginatedEmployees();
+  }
 
+  goToNextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getPaginatedEmployees();
+    }
+  }
+
+  goToPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getPaginatedEmployees();
+    }
   }
 
   readonly dialog = inject(MatDialog);
@@ -45,9 +62,7 @@ export class EmployeesComponent implements OnInit {
     const dialog = this.dialog.open(AddEmployeeDialogComponent, {});
 
     dialog.afterClosed().subscribe(() => {
-      this.http.getAllEmployees().subscribe(employees => {
-        this.employees = employees
-      });
+      this.getPaginatedEmployees();
     });
   }
 
@@ -58,7 +73,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   openDeleteDialog(i: number) {
-    const id = this.employees[i].id;
+    const id = this.paginatedEmployees[i].id;
     const dialog = this.dialog.open(DeleteEmployeeDialogComponent, {
       data: {
         activeEmployeeId: id,
@@ -68,7 +83,7 @@ export class EmployeesComponent implements OnInit {
     dialog.afterClosed().subscribe((result) => {
       if (result) {
         this.http.deleteEmployee(id).subscribe(() => {
-          this.employees = this.employees.filter(x => x.id !== id);
+          this.getPaginatedEmployees();
         })
       }
     })
@@ -83,21 +98,29 @@ export class EmployeesComponent implements OnInit {
   }
 
   openUpdateDialog(i: number) {
-    let employee = this.employees[i]
+    let employee = this.paginatedEmployees[i]
     const dialog = this.dialog.open(UpdateEmployeeDialogComponent, {
       data: {
         activeEmployeeUpdate: employee
       }
     });
 
-    dialog.afterClosed().subscribe((result:{result: boolean, data: any}) => {
+    dialog.afterClosed().subscribe((result: { result: boolean, data: any }) => {
       if (result.result) {
         this.http.updateEmployee(result.data).subscribe(() => {
-          this.http.getAllEmployees().subscribe(employees => {
-            this.employees = employees;
-          })
+          this.getPaginatedEmployees();
         })
       }
     })
   }
+
+  getPaginatedEmployees(){
+    this.http.getPaginatedEmployees(this.currentPage, this.pageSize)
+      .subscribe(response => {
+        this.paginatedEmployees = response.paginatedEmployees;
+        this.totalItems = response.totalCount;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize)
+      })
+  }
+
 }
